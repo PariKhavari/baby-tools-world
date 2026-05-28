@@ -4,18 +4,25 @@ from .models import Category, Comment, Product, Tag
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
+    """Admin configuration for the Category model."""
+
     list_display = ("name", "slug", "created_at")
     prepopulated_fields = {"slug": ("name",)}
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
+    """Admin configuration for the Product model."""
+
     list_display = ("name", "category", "price", "average_rating", "rating_count", "created_at")
     list_select_related = ("category",)
+    list_filter = ("tags", "category")
 
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
+    """Admin configuration for the Comment model."""
+
     list_display = ("product", "user", "guest_name", "rating", "created_at")
     list_filter = ("rating", "created_at")
     search_fields = ("guest_name", "guest_email", "text", "user__username")
@@ -23,4 +30,6 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
+    """Admin configuration for the Tag model."""
+
     list_display = ("name", "created_at")
