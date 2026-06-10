@@ -66,6 +66,19 @@ To configure the project, follow these steps:
     - `ALLOWED_HOSTS`: provide a list of comma-separated values for the allowed host configuration => Defaults to `'localhost, 127.0.0.1, 0.0.0.0'`
     - `DEBUG`: Set to `True` for development or `False` for production. Defaults to `True`
 
+### Product Tags
+
+Products can be assigned one or more tags to help categorize and describe them. Tags are managed through the Django Admin panel and displayed on each product's detail page.
+Managing Tags in the Admin Panel
+
+Log in to the Django Admin panel at localhost:8000/admin
+Navigate to Products → Tags and click Add Tag
+Enter a tag name and save
+To assign tags to a product, open the product in the admin panel under Products → Products, scroll to the Tags field, and select one or more tags from the list
+
+Tags on the Product Detail Page
+On the product detail page, assigned tags are displayed below the rating summary under the Product-Tags heading. If a product has no tags assigned, the section still appears with the message "no tags available".
+
 ### Running the linting tools
 
 > [!tip]
