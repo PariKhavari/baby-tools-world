@@ -14,10 +14,13 @@ class ProductViewAndCommentFormTests(TestCase):
         cls.product = Product.objects.create(name="Blue Rattle", price="9.99", category=cls.category)
         cls.user = User.objects.create_user(username="tester", email="t@example.com", password="pass1234")
         cls.other = User.objects.create_user(username="other", email="o@example.com", password="pass1234")
-        cls.url = reverse("product_detail", kwargs={
-        "category_slug": cls.category.slug,
-        "pk": cls.product.id,
-    })
+        cls.url = reverse(
+            "product_detail",
+            kwargs={
+                "category_slug": cls.category.slug,
+                "pk": cls.product.id,
+            },
+        )
 
     # -------- Product listing & detail (existing views) --------
     def test_product_list_view(self):
@@ -43,15 +46,14 @@ class ProductViewAndCommentFormTests(TestCase):
         self.assertIn("form", resp.context)
         self.assertIn("comments", resp.context)
 
-
     def test_authenticated_user_form_is_empty_after_submit(self):
         """Test that the comment form is empty after submitting a comment."""
-        
         # POST request — Kommentar absenden
-        response=self.client.post(self.url, {
-            "rating": 3,
-            "comment": "Great product!",
-        }, follow=True)
+        response = self.client.post(
+            self.url,
+            {"rating": 3, "comment": "Great product!"},
+            follow=True,
+        )
 
         form = response.context["form"]
 
