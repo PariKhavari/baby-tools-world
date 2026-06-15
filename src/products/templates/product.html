@@ -58,10 +58,15 @@
 
       <div class="col-auto d-none d-lg-block">
         {% if product.image %}
-          <img src="{% static product.image %}" width="400" height="400" alt="{{ product.name }}">
+          <img src="{{ product.image.url }}" width="400" height="400" alt="{{ product.name }}">
         {% else %}
           <img src="https://placehold.co/400x400" width="400" height="400" alt="Placeholder">
         {% endif %}
+        {% comment %} {% if product.image %}
+          <img src="{% static product.image %}" width="400" height="400" alt="{{ product.name }}">
+        {% else %}
+          <img src="https://placehold.co/400x400" width="400" height="400" alt="Placeholder">
+        {% endif %} {% endcomment %}
       </div>
     </div>
   </div>
