@@ -39,7 +39,21 @@
           {% endif %}
         {% endwith %}
 
-        <div class="btn btn-primary btn-center mt-auto">Buy now</div>
+<!-- (3) Product Tags -->
+        <div class="mb-3">
+          <strong>Product-Tags</strong>
+          <div class="mt-1">
+            {% if product.tags.all %}
+              {% for tag in product.tags.all %}
+                <span class="badge bg-secondary me-1">{{ tag.name }}</span>
+              {% endfor %}
+            {% else %}
+              <span class="text-muted">no tags available</span>
+            {% endif %}
+          </div>
+        </div>
+
+      <div class="btn btn-primary btn-center mt-auto">Buy now</div>
       </div>
 
       <div class="col-auto d-none d-lg-block">
