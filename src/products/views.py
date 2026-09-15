@@ -7,6 +7,15 @@ from .models import Category, Comment, Product
 
 
 def product_list(request, category_slug=None):
+    """Display a list of all products, optionally filtered by category.
+
+    Args:
+        request: The HTTP request object.
+        category_slug: Optional slug to filter products by category.
+
+    Returns:
+        HttpResponse: Rendered product list page.
+    """
     categories = Category.objects.all()
     products = Product.objects.select_related("category").annotate(
         avg_rating=Avg("comments__rating"), total_ratings=Count("comments")
@@ -17,6 +26,16 @@ def product_list(request, category_slug=None):
 
 
 def product_detail(request, category_slug, pk):
+    """Display the detail page for a single product, and handle comment submission.
+
+    Args:
+        request: The HTTP request object.
+        category_slug: The slug of the product's category.
+        pk: The primary key of the product.
+
+    Returns:
+        HttpResponse: Rendered product detail page, or a redirect after successful form submission.
+    """
     product = get_object_or_404(
         Product.objects.select_related("category").annotate(
             avg_rating=Avg("comments__rating"), total_ratings=Count("comments")
@@ -59,13 +78,7 @@ def product_detail(request, category_slug, pk):
 
             return redirect("product_detail", category_slug=category_slug, pk=product.pk)
     else:
-        # Pre-fill form for authenticated user with existing comment (if any)
-        initial = {}
-        if request.user.is_authenticated:
-            existing = product.comments.filter(user=request.user).first()
-            if existing:
-                initial = {"rating": existing.rating, "text": existing.text}
-        form = CommentForm(initial=initial)
+        form = CommentForm()
 
     return render(
         request,
